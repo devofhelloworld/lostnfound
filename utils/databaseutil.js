@@ -6,12 +6,12 @@ let cachedDb = null;
 const mongoconnect = async () => {
   if (cachedDb) return cachedDb; // reuse existing connection
 
-  if (!process.env.MONGO_URI) {
+  if (!process.env.MONGO_URL) {
     throw new Error("MONGO_URI not set");
   }
 
   try {
-    const client = new MongoClient(process.env.MONGO_URI);
+    const client = new MongoClient(process.env.MONGO_URL);
     await client.connect();
     cachedClient = client;
     cachedDb = client.db('lost&found'); // your DB name
