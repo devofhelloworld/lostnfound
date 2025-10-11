@@ -1,0 +1,82 @@
+<%- include('partials/nav')%>
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl md:text-4xl font-bold mb-2">Lost Item Details</h1>
+    <p class="text-lg opacity-90">Here’s everything we know about this item</p>
+  </div>
+</div>
+
+<!-- Item Detail Card -->
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <!-- Optional Image or Icon -->
+    <div class="h-64 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+      <i class="fas fa-box-open text-white text-7xl"></i>
+    </div>
+
+    <!-- Details Content -->
+    <div class="p-8 space-y-6">
+
+      <!-- Title and Category -->
+      <div class="flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-gray-800"><%=itemdata.itemname%></h2>
+        <span class="bg-indigo-100 text-indigo-700 text-sm font-semibold px-3 py-1 rounded-full"><%=itemdata.category%></span>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-1">Description</h3>
+        <p class="text-gray-600">
+          <%=itemdata.ddes%>
+        </p>
+      </div>
+
+      <!-- Location -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-1">Last Seen Location</h3>
+        <p class="text-gray-600">Near <%=itemdata.llocation%>, <%=itemdata.sfloc%></p>
+      </div>
+
+      <!-- Date & Time -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700 mb-1">Date Lost</h3>
+          <p class="text-gray-600"><%=itemdata.lostdate%></p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700 mb-1">Time Lost</h3>
+          <p class="text-gray-600">Approximately at <%=itemdata.losttime%></p>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-1">Reported By</h3>
+        <ul class="text-gray-600 space-y-1">
+          <li><strong>Name:</strong> <%=itemdata.fname%> <%=itemdata.lname%></li>
+          <li><strong>Email:</strong> <%=itemdata.email%></li>
+          <li><strong>Phone:</strong> <%=itemdata.phone%></li>
+          <li><strong>Student ID:</strong> <%=itemdata.roll%></li>
+        </ul>
+      </div>
+
+      <!-- Additional Notes -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-1">Additional Notes</h3>
+        <p class="text-gray-600"><%=itemdata.addnote%></p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-6">
+        <a href="/" class="w-full sm:w-auto bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition font-semibold text-center">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Home
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer')%>

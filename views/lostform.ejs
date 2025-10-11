@@ -1,0 +1,278 @@
+<%- include('partials/nav')%>
+
+<div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Report a Lost Item</h1>
+      <p class="text-lg opacity-90">Get your lost item listed!</p>
+  </div>
+</div>
+<!-- Form Container -->
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+      <form action="/submit-lost-item" method="POST"  class="space-y-6">
+          <!-- Item Information Section -->
+          <div>
+              <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <i class="fas fa-box-open text-indigo-600 mr-3"></i>
+                  Item Information
+              </h2>
+              <div class="space-y-4">
+                  <!-- Item Name -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Item Name <span class="text-red-500">*</span>
+                      </label>
+                      <input 
+                          type="text" 
+                          name="itemName"
+                          required
+                          placeholder="e.g., iPhone 13, Blue Backpack, Chemistry Textbook"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  <!-- Category -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Category <span class="text-red-500">*</span>
+                      </label>
+                      <select 
+                          name="category"
+                          required
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                          <option value="">Select a category</option>
+                          <option value="Electronics">Electronics</option>
+                          <option value="Books & Stationery">Books & Stationery</option>
+                          <option value="Clothing & Accessories">Clothing & Accessories</option>
+                          <option value="Keys & Cards">Keys & Cards</option>
+                          <option value="Bags">Bags & Backpacks</option>
+                          <option value="Jewelry & Watches">Jewelry & Watches</option>
+                          <option value="Sports">Sports Equipment</option>
+                          <option value="Other">Other</option>
+                      </select>
+                  </div>
+
+                  <!-- Description -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Detailed Description <span class="text-red-500">*</span>
+                      </label>
+                      <textarea 
+                          name="description"
+                          required
+                          rows="4"
+                          placeholder="Provide as many details as possible: color, brand, size, distinctive marks, condition, etc."
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"></textarea>
+                      <p class="text-sm text-gray-500 mt-1">Include specific details to help identify the owner</p>
+                  </div>
+
+                  <!-- Image Upload -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Upload Photo (Optional)
+                      </label>
+                      <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition">
+                          <input 
+                              type="file" 
+                              name="itemPhoto"
+                              accept="image/*"
+                              class="hidden" 
+                              id="photoUpload">
+                          <label for="photoUpload" class="cursor-pointer">
+                              <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                              <p class="text-gray-600">Click to upload or drag and drop</p>
+                              <p class="text-sm text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</p>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Location Information Section -->
+          <div class="border-t pt-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <i class="fas fa-map-marker-alt text-indigo-600 mr-3"></i>
+                  Location Details
+              </h2>
+              <div class="space-y-4">
+                  <!-- Location lost -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Where did you lost it? <span class="text-red-500">*</span>
+                      </label>
+                      <select 
+                          name="location"
+                          required
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                          <option value="">Select location</option>
+                          <option value="library">Main Library</option>
+                          <option value="cafeteria">Student Cafeteria</option>
+                          <option value="science">Science Building</option>
+                          <option value="gym">Gymnasium</option>
+                          <option value="parking">Parking Lot</option>
+                          <option value="lab">Computer Lab</option>
+                          <option value="center">Student Center</option>
+                          <option value="dorm">Dormitory</option>
+                          <option value="classroom">Classroom</option>
+                          <option value="other">Other</option>
+                      </select>
+                  </div>
+
+                  <!-- Specific Location -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Specific Location/Floor
+                      </label>
+                      <input 
+                          type="text" 
+                          name="specificLocation"
+                          placeholder="e.g., 2nd floor, near vending machines, room 204"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  <!-- Date Found -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Date lost <span class="text-red-500">*</span>
+                      </label>
+                      <input 
+                          type="date" 
+                          name="dateLost"
+                          required
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  <!-- Time Found -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Approximate Time lost
+                      </label>
+                      <input 
+                          type="time" 
+                          name="timeLost"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+              </div>
+          </div>
+
+          <!-- Your Information Section -->
+          <div class="border-t pt-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <i class="fas fa-user text-indigo-600 mr-3"></i>
+                  Your Information
+              </h2>
+              <div class="space-y-4">
+                  <!-- Name -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                          <label class="block text-gray-700 font-semibold mb-2">
+                              First Name <span class="text-red-500">*</span>
+                          </label>
+                          <input 
+                              type="text" 
+                              name="firstName"
+                              required
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                      </div>
+                      <div>
+                          <label class="block text-gray-700 font-semibold mb-2">
+                              Last Name <span class="text-red-500">*</span>
+                          </label>
+                          <input 
+                              type="text" 
+                              name="lastName"
+                              required
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                      </div>
+                  </div>
+
+                  <!-- Email -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Email Address <span class="text-red-500">*</span>
+                      </label>
+                      <input 
+                          type="email" 
+                          name="email"
+                          required
+                          placeholder="your.email@college.edu"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  <!-- Phone -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Phone Number <span class="text-red-500">*</span>
+                      </label>
+                      <input 
+                          type="tel" 
+                          name="phone"
+                          required
+                          placeholder="(555) 123-4567"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  <!-- Student/Staff ID -->
+                  <div>
+                      <label class="block text-gray-700 font-semibold mb-2">
+                          Student ID
+                      </label>
+                      <input 
+                          type="text" 
+                          name="userId"
+                          placeholder="Your college roll number"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+
+                  
+          <!-- Additional Notes Section -->
+          <div class="border-t pt-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <i class="fas fa-comment-alt text-indigo-600 mr-3"></i>
+                  Additional Information
+              </h2>
+              <div>
+                  <label class="block text-gray-700 font-semibold mb-2">
+                      Any additional notes?
+                  </label>
+                  <textarea 
+                      name="additionalNotes"
+                      rows="3"
+                      placeholder="Any other relevant information about the found item or circumstances..."
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"></textarea>
+              </div>
+          </div>
+
+          <!-- Terms and Conditions -->
+          <div class="border-t pt-6">
+              <label class="flex items-start cursor-pointer">
+                  <input 
+                      type="checkbox" 
+                      name="terms"
+                      required
+                      class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                  <span class="ml-3 text-gray-700">
+                      I confirm that the information provided is accurate and I agree to help return this item to its rightful owner. <span class="text-red-500">*</span>
+                  </span>
+              </label>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+              <button 
+                  type="submit"
+                  class="flex-1 bg-indigo-600 text-white px-8 py-4 rounded-lg hover:bg-indigo-700 transition font-semibold text-lg shadow-lg hover:shadow-xl">
+                  <i class="fas fa-paper-plane mr-2"></i>
+                  Submit Lost Item Report
+              </button>
+              <button 
+                  type="reset"
+                  class="bg-gray-200 text-gray-700 px-8 py-4 rounded-lg hover:bg-gray-300 transition font-semibold">
+                  <i class="fas fa-redo mr-2"></i>
+                  Clear Form
+              </button>
+          </div>
+      </form>
+  </div>
+
+
+  <%- include('partials/helpcard')%>

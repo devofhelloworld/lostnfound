@@ -1,0 +1,246 @@
+<%- include('partials/nav')%>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Lost Something on Campus?</h1>
+            <p class="text-xl mb-8">We're here to help reunite you with your belongings</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="/lost_form">
+                <button class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-lg">
+                    <i class="fas fa-plus mr-2"></i>Report Lost Item
+                </button></a>
+                <a href="/found_form">
+                <button class="bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-800 transition shadow-lg">
+                    <i class="fas fa-hand-holding mr-2"></i>Report Found Item
+                </button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar --><form action="/search_results" method="POST">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+        <div class="bg-white rounded-lg shadow-xl p-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                
+                <div class="flex-1">
+                    <input name="keyword" type="text" placeholder="Search for items..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="md:w-48">
+                    <select name="category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="all">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                          <option value="Books & Stationery">Books & Stationery</option>
+                          <option value="Clothing & Accessories">Clothing & Accessories</option>
+                          <option value="Keys & Cards">Keys & Cards</option>
+                          <option value="Bags">Bags & Backpacks</option>
+                          <option value="Jewelry & Watches">Jewelry & Watches</option>
+                          <option value="Sports">Sports Equipment</option>
+                          <option value="Others">Others</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                    Search
+                </button>
+           
+            </div>
+        </div>
+    </div>
+ </form>
+    <!-- Stats Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-box-open text-indigo-600 text-4xl mb-3"></i>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">97</h3>
+                <p class="text-gray-600">Items Found</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-handshake text-green-600 text-4xl mb-3"></i>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">189</h3>
+                <p class="text-gray-600">Items Reunited</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <i class="fas fa-clock text-orange-600 text-4xl mb-3"></i>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">45</h3>
+                <p class="text-gray-600">Pending Claims</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Items Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8">Recently Found Items</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Item Card 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <i class="fas fa-mobile-alt text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Electronics</span>
+                        <span class="text-gray-500 text-sm">2 days ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">iPhone 13 Pro</h3>
+                    <p class="text-gray-600 mb-4">Found near the library entrance. Black case with stickers.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Main Library</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item Card 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                    <i class="fas fa-book text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Books</span>
+                        <span class="text-gray-500 text-sm">1 day ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Chemistry Textbook</h3>
+                    <p class="text-gray-600 mb-4">Organic Chemistry 5th Edition with notes inside.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Science Building</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item Card 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-id-card text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded">ID Cards</span>
+                        <span class="text-gray-500 text-sm">3 hours ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Student ID Card</h3>
+                    <p class="text-gray-600 mb-4">Found in the cafeteria. Name partially visible.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Student Cafeteria</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item Card 4 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+                    <i class="fas fa-key text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">Keys</span>
+                        <span class="text-gray-500 text-sm">5 days ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Set of Keys</h3>
+                    <p class="text-gray-600 mb-4">Keychain with blue fob and 3 keys attached.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Gym Parking Lot</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item Card 5 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                    <i class="fas fa-headphones text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Electronics</span>
+                        <span class="text-gray-500 text-sm">1 week ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Wireless Headphones</h3>
+                    <p class="text-gray-600 mb-4">Sony WH-1000XM4, black color with carrying case.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Computer Lab</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item Card 6 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                <div class="h-48 bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+                    <i class="fas fa-backpack text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-pink-100 text-pink-800 text-xs font-semibold px-2.5 py-0.5 rounded">Other</span>
+                        <span class="text-gray-500 text-sm">4 days ago</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Blue Backpack</h3>
+                    <p class="text-gray-600 mb-4">North Face backpack with laptop compartment.</p>
+                    <div class="flex items-center text-gray-600 text-sm mb-4">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Student Center</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
+                        Claim This Item
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <button class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-300 transition font-semibold">
+                View All Items <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Report Item</h3>
+                    <p class="text-gray-600">Found or lost something? Report it with details and location.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Search & Match</h3>
+                    <p class="text-gray-600">Browse items or get notified when there's a match.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Get Reunited</h3>
+                    <p class="text-gray-600">Claim your item from the campus security office.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<%- include('partials/footer')%>
+    
