@@ -27,7 +27,9 @@ app.use((req,res,next)=>{
   res.render('404',{pagetitle:'Page not found!'});
 })
 
-const PORT = 3000;
+
 mongoconnect(()=>{
-  app.listen(PORT,()=>console.log(`This server is running on http://localhost:${PORT}`));
+  console.log('MongoDB Connection Succesfull!');
 });
+
+module.exports = app;
