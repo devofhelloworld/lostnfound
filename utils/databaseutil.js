@@ -1,31 +1,23 @@
-const { MongoClient } = require('mongodb');
+const mongo = require('mongodb');
+const MongoClient = mongo.MongoClient;
 
-let cachedClient = null;
-let cachedDb = null;
+const MONGO_URL = "mongodb+srv://root:root@lostnfound.yyk8iar.mongodb.net/?retryWrites=true&w=majority&appName=lostnfound";
 
-const mongoconnect = async () => {
-  if (cachedDb) return cachedDb; // reuse existing connection
+let _db;
 
-  if (!process.env.MONGO_URL) {
-    throw new Error("MONGO_URI not set");
+const mongoconnect = (callback)=>{
+  MongoClient.connect(MONGO_URL).then(client=>{
+    _db = client.db('lost&found');
+    callback();
+  }).catch(error=>console.log('what Error',error));
+}
+
+const getdb = ()=>{
+  if(!_db){
+    throw new Error('Database not connected'); 
   }
+  else return _db;
+}
 
-  try {
-    const client = new MongoClient(process.env.MONGO_URL);
-    await client.connect();
-    cachedClient = client;
-    cachedDb = client.db('lost&found'); // your DB name
-    console.log('MongoDB connected successfully!');
-    return cachedDb;
-  } catch (err) {
-    console.error('MongoDB connection failed:', err);
-    throw err;
-  }
-};
-
-const getdb = () => {
-  if (!cachedDb) throw new Error('Database not connected');
-  return cachedDb;
-};
-
-module.exports = { mongoconnect, getdb };
+exports.getdb = getdb ;
+exports.mongoconnect = mongoconnect;
