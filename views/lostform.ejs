@@ -24,7 +24,7 @@
                       </label>
                       <input 
                           type="text" 
-                          name="itemName"
+                          name="itemname"
                           required
                           placeholder="e.g., iPhone 13, Blue Backpack, Chemistry Textbook"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
@@ -57,7 +57,7 @@
                           Detailed Description <span class="text-red-500">*</span>
                       </label>
                       <textarea 
-                          name="description"
+                          name="ddes"
                           required
                           rows="4"
                           placeholder="Provide as many details as possible: color, brand, size, distinctive marks, condition, etc."
@@ -73,7 +73,7 @@
                       <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition">
                           <input 
                               type="file" 
-                              name="itemPhoto"
+                              name="imglink"
                               accept="image/*"
                               class="hidden" 
                               id="photoUpload">
@@ -100,7 +100,7 @@
                           Where did you lost it? <span class="text-red-500">*</span>
                       </label>
                       <select 
-                          name="location"
+                          name="llocation"
                           required
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                           <option value="">Select location</option>
@@ -124,7 +124,7 @@
                       </label>
                       <input 
                           type="text" 
-                          name="specificLocation"
+                          name="sfloc"
                           placeholder="e.g., 2nd floor, near vending machines, room 204"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                   </div>
@@ -136,7 +136,7 @@
                       </label>
                       <input 
                           type="date" 
-                          name="dateLost"
+                          name="lostdate"
                           required
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                   </div>
@@ -148,7 +148,7 @@
                       </label>
                       <input 
                           type="time" 
-                          name="timeLost"
+                          name="losttime"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                   </div>
               </div>
@@ -168,8 +168,9 @@
                               First Name <span class="text-red-500">*</span>
                           </label>
                           <input 
+                              value="<%=userdata.fname%>"
                               type="text" 
-                              name="firstName"
+                              name="fname"
                               required
                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                       </div>
@@ -178,8 +179,9 @@
                               Last Name <span class="text-red-500">*</span>
                           </label>
                           <input 
+                              value="<%=userdata.lname%>"
                               type="text" 
-                              name="lastName"
+                              name="lname"
                               required
                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                       </div>
@@ -191,6 +193,7 @@
                           Email Address <span class="text-red-500">*</span>
                       </label>
                       <input 
+                          value="<%=userdata.email%>"
                           type="email" 
                           name="email"
                           required
@@ -204,6 +207,7 @@
                           Phone Number <span class="text-red-500">*</span>
                       </label>
                       <input 
+                          value="<%=userdata.phone%>"
                           type="tel" 
                           name="phone"
                           required
@@ -217,8 +221,9 @@
                           Student ID
                       </label>
                       <input 
+                          value="<%=userdata.roll%>"
                           type="text" 
-                          name="userId"
+                          name="roll"
                           placeholder="Your college roll number"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                   </div>
@@ -235,7 +240,7 @@
                       Any additional notes?
                   </label>
                   <textarea 
-                      name="additionalNotes"
+                      name="addnote"
                       rows="3"
                       placeholder="Any other relevant information about the found item or circumstances..."
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"></textarea>

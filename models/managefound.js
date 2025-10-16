@@ -1,41 +1,19 @@
-const {getdb} = require('../utils/databaseutil');
-const {ObjectId} = require('mongodb');
+const mongoose = require('mongoose');
 
-module.exports = class found_data{
-  constructor(itemname,category,ddes,imglink,fname,lname,phone,roll,currentlocation,addnote,terms,_id){
-    this.itemname = itemname;
-    this.category = category;
-    this.ddes = ddes;
-    this.imglink = imglink;
-    this.fname = fname;
-    this.lname = lname;
-    this.phone = phone;
-    this.roll = roll;
-    this.currentlocation = currentlocation;
-    this.addnote = addnote;
-    this.terms = terms;
-    if(_id)this._id = _id;
-    
-  }
+const foundSchema = mongoose.Schema({
+  itemname:{type: String , required: true}
+  ,category:{type: String , required: true}
+  ,ddes:{type: String , required: true}
+  ,imglink: String
+  ,fname:{type: String , required: true}
+  ,lname:{type: String , required: true}
+  ,phone:{type: Number , required: true}
+  ,roll:{type: Number , required: true}
+  ,currentlocation:{type: String , required: true}
+  ,addnote:String
+  ,terms:{type: String , required: true}
 
-  save(){
-   const db = getdb();
-   return db.collection('found').insertOne(this);
-  }
+})
 
-  static fetchdetails(){
-    const db = getdb();
-    return db.collection('found').find().toArray();
-  }
+module.exports = mongoose.model('found',foundSchema);
 
-  static getitem(id){
-    const db = getdb();
-    return db.collection('found').find({_id:new ObjectId(String(id))}).next();
-  }
-
-  static getsearchdata(keyword,category){
-    const db = getdb();
-    if(category=='all') return db.collection('found').find().toArray();
-    else return db.collection('found').find({category: category}).toArray();
-  }
-}

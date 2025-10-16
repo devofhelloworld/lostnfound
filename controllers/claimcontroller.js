@@ -1,34 +1,58 @@
-const claim_dataf = require('../models/manageclaims');
-const found_data = require('../models/managefound');
+const claim = require("../models/manageclaims");
+const found = require("../models/managefound");
 
-exports.claimdetails = (req,res,next) =>{
-  claim_dataf.fetchdetails().then( (founddata) => {
-    res.render('claimrequest',{founddata:founddata,pagetitle:'Claim Requests'});
-  }
-  )
-  
-}
-
-exports.addtoclaimitems = (req,res,next) =>{
-  const claimid = req.params.claimid;
-  console.log(claimid);
-  found_data.getitem(claimid).then((data)=>{
-    console.log(data);
-    claim_dataf.findexistence(claimid).then((gotdata)=>{
-      console.log(gotdata);
-      if(gotdata){
-        console.log('Already marked for claim');
-        res.redirect(`/found_items/${gotdata._id}?claim=true&claimed=true`);
-        // return res.status(400).json({ message: 'Already marked for claim by someone!' });
-      }
-      else{
-        let {itemname,category,ddes,imglink,fname,lname,phone,roll,currentlocation,addnote,terms,_id} = data;
-        console.log(itemname);
-        const claimitem = new claim_dataf(itemname,category,ddes,imglink,fname,lname,phone,roll,currentlocation,addnote,terms,_id);
-        claimitem.save();
-        res.redirect('/claimrequests'); 
-      }
-    })
+exports.claimdetails = (req, res, next) => {
+  claim.find().then((founddata) => {
+    const claimids = founddata.map((ids) => ids.refid.toString());
     
-  })
-}
+    found.find().then((datas) => {
+      const fdata = datas.filter((dataid) =>
+              claimids.includes(dataid._id.toString())
+        
+      );
+      const ids = datas.map(data=>data._id.toString());
+      const delid = founddata.filter((id)=>{
+        return !ids.includes(id.refid.toString());
+      })
+
+      delid.forEach(id => {
+        const del = id._id.toString();
+        console.log(del);
+        claim.findByIdAndDelete(del).then(()=>
+        console.log('Delete is success!'));
+      });
+      
+      
+
+      res.render("claimrequest", {
+        founddata: fdata,
+        pagetitle: "Claim Requests",isloggedin: req.session.isloggedin
+      });
+    });
+  });
+};
+
+exports.addtoclaimitems = (req, res, next) => {
+  const refid = req.params.claimid;
+  found.findById(refid).then((datas) => {
+    claim.find().then((data) => {
+      const datas = data.find((ids) => {
+        return ids.refid.toString() == refid;
+      });
+
+      if (!datas) {
+        const useremail = req.session.useremail;
+        const claimitem = new claim({ refid ,useremail});
+        claimitem
+          .save()
+          .then(() => {console.log("Claim added successfully!")
+            res.redirect("/claimrequests");
+          })
+          .catch((err) => console.log(err));
+        
+      } else {
+        res.redirect(`/found_items/${refid}?claim=true&claimed=true`);
+      }
+    });
+  });
+};

@@ -1,7 +1,9 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 
-const MONGO_URL = "mongodb+srv://root:root@lostnfound.yyk8iar.mongodb.net/?retryWrites=true&w=majority&appName=lostnfound";
+require('dotenv').config();
+
+const MONGO_URL = process.env.MONGO_URL;
 
 let _db;
 
