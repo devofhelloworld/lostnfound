@@ -16,7 +16,7 @@ exports.savelost = (req,res,next)=>{
 
 exports.lostlist = (req,res,next)=>{
 
-  lost.find().then( (lostdata) =>  {
+  lost.find().sort({_id:-1}).then( (lostdata) =>  {
     res.render('lostitems',{lostdata:lostdata, pagetitle:'Lost Items',isloggedin: req.session.isloggedin});
   });
 }

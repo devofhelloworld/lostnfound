@@ -1,130 +1,218 @@
 const session = require("express-session");
 const user = require("../models/user");
-const {check, validationResult} = require('express-validator');
-const bcrypt = require('bcryptjs');
+const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
-exports.login = (req,res,next)=>{
-  res.render('login',{pagetitle:'Login',isloggedin: req.session.isloggedin});
-}
+exports.login = (req, res, next) => {
+  res.render("login", {
+    pagetitle: "Login",
+    isloggedin: req.session.isloggedin,
+    errormsg:{},
+    error:''
+  });
+};
 
-exports.postlogin = 
+exports.postlogin = [
   
-   (req,res,next)=>{
-
-    const {email,password} = req.body;
-  user.find({email:email}).then(([data])=>{
-     console.log(data);
-     if(!data){
-     res.redirect('/login'); 
+  check('email').trim().isEmail().withMessage('Wrong email or password!').custom((email)=>{
+    if(!email.endsWith('@nitp.ac.in')){
+      throw new Error('Wrong email or password!');
     }
-    else{
-      const match = bcrypt.compare(password,data.password);
-      if(match){
-        console.log('Login Successful!');
-        req.session.isloggedin = true;
-        req.session.useremail = email;
-        res.redirect('/');
+    return true;
+  }),
+
+  check('password').trim().isLength({min:8}).withMessage('Wrong email or password!'),
+
+
+  (req, res, next) => {
+  const { email, password } = req.body;
+  user.find({ email: email }).then(async ([data]) => {
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!data) {
+
+      res.render("login", {
+        pagetitle: "Login",
+        isloggedin: req.session.isloggedin,
+        errormsg:{},
+        error:'Invalid email or password!'
+      });
+
+    } else {
+      if(!errors.isEmpty()){
+        console.log('here');
+        res.status(422).render("login", {
+          pagetitle: "Login",
+          isloggedin: req.session.isloggedin,
+          errormsg: errors.array().map(error=> error.msg),
+          error:''
+          })
       }
       else{
-        res.redirect('/login'); 
+
+      const match = await bcrypt.compare(password, data.password);
+      console.log(match);
+      if (match) {
+        console.log("Login Successful!");
+        req.session.isloggedin = true;
+        req.session.useremail = email;
+        res.redirect("/");
+      } 
+      else {
+        res.render("login", {
+          pagetitle: "Login",
+          isloggedin: req.session.isloggedin,
+          errormsg:{},
+          error:'Invalid email or password!'
+        });
       }
-  }
-      
-  })
-  
-}
+      } 
+    }
+  });
+}]
 
-exports.logout = (req,res,next)=>{
-  req.session.destroy(()=>{res.redirect('/login')});
-}
+exports.logout = (req, res, next) => {
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
+};
 
-exports.signup = (req,res,next)=>{
-  res.render('signup',{pagetitle: 'Sign-Up',isloggedin:req.session.isloggedin,errormsg:[],oldinputs:{}});
-}
+exports.signup = (req, res, next) => {
+  res.render("signup", {
+    pagetitle: "Sign-Up",
+    isloggedin: req.session.isloggedin,
+    errormsg: [],
+    oldinputs: {},
+  });
+};
 
 exports.postsignup = [
-  
-  check('fname').notEmpty().withMessage('First name is required').trim().isLength({min:3}).withMessage('First name should be atleast 3 characters long').matches(/^[a-zA-Z]+$/).withMessage('First name must contain only letters!'),
-  
-  check('lname').notEmpty().withMessage('Last name is required').trim().isLength({min:3}).withMessage('Last name should be atleast 3 characters long').matches(/^[a-zA-Z]+$/).withMessage('Last name must contain only letters!'),
-  
-  check('email').isEmail().withMessage('Enter a valid Email Address').custom((email)=>{
-    if(!email.endsWith('@nitp.ac.in')){
-      throw new Error('You must use your college Email id');
-    }
-    return true;
-  }),
+  check("fname")
+    .notEmpty()
+    .withMessage("First name is required")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("First name should be atleast 3 characters long")
+    .matches(/^[a-zA-Z]+$/)
+    .withMessage("First name must contain only letters!"),
 
-  check('phone').notEmpty().withMessage('Phone number is required!').isLength({min:10,max:10}).withMessage('Phone number must be of 10 digits').isNumeric().withMessage('Phone must contain only digits!'),
+  check("lname")
+    .notEmpty()
+    .withMessage("Last name is required")
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage("Last name should be atleast 3 characters long")
+    .matches(/^[a-zA-Z]+$/)
+    .withMessage("Last name must contain only letters!"),
 
-  check('roll').notEmpty().withMessage('Roll no. is required!').isLength({min:7,max:7}).withMessage('Enter valid roll no.!').isNumeric().withMessage('Roll no. must contain only digits!'),
+  check("email")
+    .isEmail()
+    .withMessage("Enter a valid Email Address")
+    .custom((email) => {
+      if (!email.endsWith("@nitp.ac.in")) {
+        throw new Error("You must use your college Email id");
+      }
+      return true;
+    }),
 
-  check('password').notEmpty().isLength({min:8}).withMessage('Password length should be atleast 8').trim(),
-  
-  check('conpassword').notEmpty().withMessage('Confirm your Password').custom((conpassword,{req})=>{
-    
-    if(conpassword!=req.body.password){
-      throw new Error('Password is mismatched');
-    }
-    return true;
-  }),
+  check("phone")
+    .notEmpty()
+    .withMessage("Phone number is required!")
+    .isLength({ min: 10, max: 10 })
+    .withMessage("Phone number must be of 10 digits")
+    .isNumeric()
+    .withMessage("Phone must contain only digits!"),
 
-  check('terms').notEmpty().withMessage('Accept the terms and conditions!').custom((terms)=>{
-    if(!terms=='on'){
-      throw new Error('Accept the terms and conditions');
-    }
-    return true;
-  }),
-  
-  async (req,res,next)=>{
+  check("roll")
+    .notEmpty()
+    .withMessage("Roll no. is required!")
+    .isLength({ min: 7, max: 7 })
+    .withMessage("Enter valid roll no.!")
+    .isNumeric()
+    .withMessage("Roll no. must contain only digits!"),
 
-  const {fname,lname,email,phone,roll,password,conpassword,terms} = req.body;
-    const userdata = await user.find({email:email});
+  check("password")
+    .notEmpty()
+    .isLength({ min: 8 })
+    .withMessage("Password length should be atleast 8")
+    .trim(),
+
+  check("conpassword")
+    .notEmpty()
+    .withMessage("Confirm your Password")
+    .custom((conpassword, { req }) => {
+      if (conpassword != req.body.password) {
+        throw new Error("Password is mismatched");
+      }
+      return true;
+    }),
+
+  check("terms")
+    .notEmpty()
+    .withMessage("Accept the terms and conditions!")
+    .custom((terms) => {
+      if (!terms == "on") {
+        throw new Error("Accept the terms and conditions");
+      }
+      return true;
+    }),
+
+  async (req, res, next) => {
+    const { fname, lname, email, phone, roll, password, conpassword, terms } =
+      req.body;
+    const userdata = await user.find({ email: email });
 
     const errors = validationResult(req);
     console.log(userdata);
 
-    if(userdata.length==0){
-      if(!errors.isEmpty()){
-          return res.status(422).render('signup',{
-            pagetitle: 'Sign-Up',
-            isloggedin: req.session.isloggedin,
-            errormsg: errors.array().map(error=>error.msg),
-            oldinputs: {
-              fname: fname,
-              lname: lname,
-              email: email,
-              phone: phone,
-              roll: roll,
-              present:''
-            }
-          })
-        }
-      else{
-      console.log(req.body);
-      bcrypt.hash(password,12).then(password=>{
-      const userdata = new user({fname,lname,email,phone,roll,password,terms});
-      userdata.save().then(()=>{
-      res.redirect('/login');
-      })
-      })   
-    } 
-    }
-    else{
-      return res.status(422).render('signup',{
-        pagetitle: 'Sign-Up',
+    if (userdata.length == 0) {
+      if (!errors.isEmpty()) {
+        return res.status(422).render("signup", {
+          pagetitle: "Sign-Up",
+          isloggedin: req.session.isloggedin,
+          errormsg: errors.array().map((error) => error.msg),
+          oldinputs: {
+            fname: fname,
+            lname: lname,
+            email: email,
+            phone: phone,
+            roll: roll,
+            present: "",
+          },
+        });
+      } else {
+        console.log(req.body);
+        bcrypt.hash(password, 12).then((password) => {
+          const userdata = new user({
+            fname,
+            lname,
+            email,
+            phone,
+            roll,
+            password,
+            terms,
+          });
+          userdata.save().then(() => {
+            res.redirect("/login");
+          });
+        });
+      }
+    } else {
+      return res.status(422).render("signup", {
+        pagetitle: "Sign-Up",
         isloggedin: req.session.isloggedin,
-        errormsg: errors.array().map(error=>error.msg),
+        errormsg: errors.array().map((error) => error.msg),
         oldinputs: {
           fname: fname,
           lname: lname,
           email: email,
           phone: phone,
           roll: roll,
-          present:`User with ${email} already exists`
-        }
-      })
+          present: `User with ${email} already exists`,
+        },
+      });
     }
-    
-    
-}]
+  },
+];

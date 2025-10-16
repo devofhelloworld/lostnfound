@@ -10,6 +10,25 @@
               <h2 class="text-3xl font-bold text-gray-800 mb-4  text-center">
                  Sign-In 
               </h2>
+
+              <% if(errormsg.length>0){ %>
+              <div class="box-border font-semibold p-5 border-dotted mb-8 border-blue-600 bg-red-100 rounded border" role="alert">
+                <ol class="p-3">
+                    
+                        <%errormsg.forEach(error =>{ %>
+                            <li class="list-disc"><span class=" text-red-600 "><%= error%></span></li>
+                        <%})%>
+                        <li class="list-disc"><span class=" text-red-600 "><%= error%></span></li> 
+                    </ol>
+              </div>
+              <%}else{ if(error!=''){%>
+                <div class="box-border font-semibold p-5 border-dotted mb-8 border-blue-600 bg-red-100 rounded border" role="alert">
+                  <ol>
+                    <li class="list-disc"><span class=" text-red-600 "><%= error%></span></li>
+                  </ol>
+                </div>
+                <%}%>
+                <%}%>
               <div class="space-y-4">
                   
 

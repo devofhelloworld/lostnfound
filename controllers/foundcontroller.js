@@ -17,7 +17,7 @@ exports.savefound = (req,res,next)=>{
 }
 
 exports.foundlist = (req,res,next)=>{
-   found.find().then((founddata)=>{
+   found.find().sort({_id:-1}).then((founddata)=>{
     res.render('founditems',{ founddata:founddata ,pagetitle:'Found Items',isloggedin: req.session.isloggedin});
    })
    
