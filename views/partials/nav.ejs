@@ -5,67 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= pagetitle%></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/output.css">
+    <style>
+        /* Smooth scroll padding for fixed nav */
+        html {
+            scroll-padding-top: 80px;
+        }
+        
+        /* Line clamp utility */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-indigo-600 shadow-lg">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-gray-900 via-indigo-900 to-gray-900 shadow-lg backdrop-blur-lg bg-opacity-95">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center h-16">
-            <div class="flex items-center">
-      
-              <span class="text-white text-xl font-bold"><a href="/">Lost & Found NIT Patna</a></span>
+            <div class="flex items-center group">
+
+              <span class="text-white text-xl font-bold hover:text-indigo-100 transition-colors"><a href="/">Lost & Found NIT Patna</a></span>
             </div>
       
             <!-- Desktop menu -->
             <div class="hidden md:flex gap-0.5 lg:space-x-4">
-              <a href="/" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md transition">Home</a>
+              <a href="/" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
+                <i class="fas fa-home mr-2"></i>Home
+              </a>
               <% if(isloggedin){ %>
-              <a href="/lost_items" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md transition">Lost Items</a>
-              <a href="/found_items" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md transition">Found Items</a>
-              <a href="/claimrequests" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md transition">Claim Requests</a><%}%>
-              <a href="/contact" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md transition">Contact</a>
+              <a href="/lost_items" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
+                <i class="fas fa-search mr-2"></i>Lost Items
+              </a>
+              <a href="/found_items" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
+                <i class="fas fa-box-open mr-2"></i>Found Items
+              </a>
+              <a href="/claimrequests" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
+                <i class="fas fa-hand-holding mr-2"></i>Claim Requests
+              </a><%}%>
+              <a href="/contact" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
+                <i class="fas fa-envelope mr-2"></i>Contact
+              </a>
               
 
            <%if(isloggedin){ %>
-            <a href="/logout" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Logout</a>
+            <a href="/logout" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105 border border-white/30">
+              <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </a>
               <%}else {%>
-                <a href="/login" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Login</a>
+                <a href="/login" class="block bg-white text-indigo-600 hover:bg-gray-50 px-4 py-2 rounded-xl transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
+                  <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </a>
                 <%}%>
               
             </div>
       
             <!-- Hamburger button (mobile only) -->
-            <button id="hamburger" class="md:hidden flex flex-col space-y-1.5 p-2 focus:outline-none" aria-label="Toggle menu">
-              <span class="block w-6 h-0.5 bg-white"></span>
-              <span class="block w-6 h-0.5 bg-white"></span>
-              <span class="block w-6 h-0.5 bg-white"></span>
+            <button id="hamburger" class="md:hidden flex flex-col space-y-1.5 p-2 focus:outline-none hover:bg-white/10 rounded-lg transition-all" aria-label="Toggle menu">
+              <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
+              <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
+              <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="line3"></span>
             </button>
           </div>
         </div>
       
         <!-- Mobile menu (hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 bg-indigo-700">
-          <a href="/" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Home</a>
+        <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 bg-indigo-700/95 backdrop-blur-lg border-t border-white/10">
+          <a href="/" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
+            <i class="fas fa-home mr-2"></i>Home
+          </a>
           <% if(isloggedin){ %>
-          <a href="/lost_items" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Lost Items</a>
-          <a href="/found_items" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Found Items</a>
-          <a href="/claimrequests" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Claim Requests</a>
+          <a href="/lost_items" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
+            <i class="fas fa-search mr-2"></i>Lost Items
+          </a>
+          <a href="/found_items" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
+            <i class="fas fa-box-open mr-2"></i>Found Items
+          </a>
+          <a href="/claimrequests" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
+            <i class="fas fa-hand-holding mr-2"></i>Claim Requests
+          </a>
           <%}%>
-          <a href="/contact" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Contact</a>
+          <a href="/contact" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
+            <i class="fas fa-envelope mr-2"></i>Contact
+          </a>
           
            <%if(isloggedin){ %>
-          <a href="/logout" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Logout</a>
+          <a href="/logout" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all border border-white/30">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+          </a>
             <%}else {%>
-              <a href="/login" class="block text-white hover:bg-indigo-800 px-3 py-2 rounded-md transition">Login</a>
+              <a href="/login" class="block bg-white text-indigo-600 hover:bg-gray-50 px-3 py-2 rounded-xl transition-all font-semibold shadow-lg">
+                <i class="fas fa-sign-in-alt mr-2"></i>Login
+              </a>
               <%}%>
         </div>
       </nav>
       
+      <!-- Spacer for fixed nav -->
+      <div class="h-16"></div>
+      
       <script>
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
       
         hamburger.addEventListener('click', () => {
           mobileMenu.classList.toggle('hidden');
+          
+          // Animate hamburger to X
+          if (!mobileMenu.classList.contains('hidden')) {
+            line1.style.transform = 'rotate(45deg) translateY(8px)';
+            line2.style.opacity = '0';
+            line3.style.transform = 'rotate(-45deg) translateY(-8px)';
+          } else {
+            line1.style.transform = 'rotate(0) translateY(0)';
+            line2.style.opacity = '1';
+            line3.style.transform = 'rotate(0) translateY(0)';
+          }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+            line1.style.transform = 'rotate(0) translateY(0)';
+            line2.style.opacity = '1';
+            line3.style.transform = 'rotate(0) translateY(0)';
+          }
+        });
+
+        // Add scroll effect to navbar
+        const nav = document.querySelector('nav');
+        
+        window.addEventListener('scroll', () => {
+          const currentScroll = window.pageYOffset;
+          
+          if (currentScroll > 50) {
+            nav.classList.add('shadow-2xl');
+          } else {
+            nav.classList.remove('shadow-2xl');
+          }
         });
       </script>
