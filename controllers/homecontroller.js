@@ -5,7 +5,6 @@ const claim = require('../models/manageclaims');
 
 exports.foundform = (req,res,next)=>{
   user.find({email:req.session.useremail}).then(([userdata])=>{
-    console.log(userdata);
     res.render('foundform',{pagetitle: 'Report Found Items',type:'Found',isloggedin: req.session.isloggedin ,userdata:userdata});
   })
   
