@@ -63,10 +63,15 @@ const getCategoryStyle = (cat) => {
       %>
         <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 border border-slate-150 flex flex-col h-full">
           <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex-shrink-0">
-            <div class="absolute inset-0 bg-slate-950/15"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <i class="fas <%= style.icon %> text-white text-6xl opacity-90 group-hover:scale-110 transition-transform duration-300"></i>
-            </div>
+            <% if (item.imglink) { %>
+              <img src="<%= item.imglink %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="<%= item.itemname %>">
+              <div class="absolute inset-0 bg-slate-950/10"></div>
+            <% } else { %>
+              <div class="absolute inset-0 bg-slate-950/15"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i class="fas <%= style.icon %> text-white text-6xl opacity-90 group-hover:scale-110 transition-transform duration-300"></i>
+              </div>
+            <% } %>
           </div>
           <div class="p-6 flex flex-col flex-1 justify-between">
             <div>

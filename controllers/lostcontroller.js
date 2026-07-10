@@ -1,16 +1,23 @@
 const lost = require("../models/managelost");
+const { uploadToCloudinary } = require('../utils/cloudinaryutil');
 
-exports.savelost = (req,res,next)=>{
-  console.log(req.body);
-   const {itemname,category,ddes,imglink,llocation,sfloc,lostdate,losttime,fname,lname,email,phone,roll,addnote,terms} = req.body;
+exports.savelost = async (req,res,next)=>{
+  try {
+    let imglink = '';
+    if (req.file) {
+      imglink = await uploadToCloudinary(req.file.buffer);
+    }
+    const {itemname,category,ddes,llocation,sfloc,lostdate,losttime,fname,lname,email,phone,roll,addnote,terms} = req.body;
 
-  const lostitem = new lost({itemname,category,ddes,imglink,llocation,sfloc,lostdate,losttime,fname,lname,email,phone,roll,addnote,terms});
+    const lostitem = new lost({itemname,category,ddes,imglink,llocation,sfloc,lostdate,losttime,fname,lname,email,phone,roll,addnote,terms});
 
-  lostitem.save().then(()=>{
+    await lostitem.save();
     console.log('Lost item added successfully!');
     res.redirect('/lost_items');
-  });
-
+  } catch (error) {
+    console.error('Error adding lost item:', error);
+    next(error);
+  }
 }
 
 exports.lostlist = (req,res,next)=>{

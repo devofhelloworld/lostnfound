@@ -33,11 +33,16 @@ const style = categoryStyles[itemdata.category] || { icon: 'fa-box-open', bg: 'f
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="bg-white rounded-3xl shadow-xl border border-slate-150 overflow-hidden">
 
-    <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex items-center justify-center">
-      <div class="absolute inset-0 bg-slate-950/15"></div>
-      <div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 shadow-lg">
-        <i class="fas <%= style.icon %> text-white text-4xl"></i>
-      </div>
+    <div class="h-64 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex items-center justify-center">
+      <% if (itemdata.imglink) { %>
+        <img src="<%= itemdata.imglink %>" class="w-full h-full object-cover" alt="<%= itemdata.itemname %>">
+        <div class="absolute inset-0 bg-slate-950/20"></div>
+      <% } else { %>
+        <div class="absolute inset-0 bg-slate-950/15"></div>
+        <div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 shadow-lg">
+          <i class="fas <%= style.icon %> text-white text-4xl"></i>
+        </div>
+      <% } %>
     </div>
 
     <div class="p-8 space-y-8">
