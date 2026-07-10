@@ -19,7 +19,7 @@ exports.claimdetails = (req, res, next) => {
             fdata.push(matchdata);
           }
         }
-        
+
         const ids = datas.map((data) => data._id.toString());
         const delid = founddata.filter((id) => {
           return !ids.includes(id.refid.toString());

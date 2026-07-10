@@ -26,7 +26,7 @@ exports.searchdata = (req,res,next)=>{
       const match = keyword.toLowerCase();
       return key.includes(match);
     });
-    
+
     if(results.length==0){
       res.render('searchresults',{founddata:results,pagetitle:'Search Results',show:'',isloggedin: req.session.isloggedin});
     }
@@ -34,5 +34,5 @@ exports.searchdata = (req,res,next)=>{
       res.render('searchresults',{founddata:results,pagetitle:'Search Results',show:'hidden',isloggedin: req.session.isloggedin});
     }
   });}
-  
+
 }

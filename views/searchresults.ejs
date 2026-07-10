@@ -1,52 +1,101 @@
 <%- include('partials/nav')%>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h2 class="text-3xl font-bold text-gray-800 mb-8">Search Results:</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-<%founddata.forEach(item =>{ %>
-  
-    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-            <i class="fas fa-mobile-alt text-white text-6xl"></i>
-        </div>
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-2">
-                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"><%=item.category%></span>
-                <span class="text-gray-500 text-sm">2 days ago</span>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-2"><%=item.itemname%></h3>
-            <p class="text-gray-600 line-clamp-1 mb-4"><%=item.ddes%></p>
-            <div class="flex items-center text-gray-600 text-sm mb-4">
-                <i class="fas fa-map-marker-alt mr-2"></i>
-                <span><%=item.currentlocation%></span>
-            </div>
-            <a href="/found_items/<%= item._id%>">
-            <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
-                Details
-            </button></a>
-        </div>
-    </div>
- 
-  <% });%>
-</div>
-<div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6 <%=show%>">
-  <div class="flex items-start">
-      <i class="fas fa-info-circle text-blue-500 text-xl mr-3 mt-1"></i>
-      <div>
-          <h3 class="text-blue-800 font-semibold mb-2">No Item Found!</h3>
-          <p class="text-blue-700 mb-2">We suggest you to try these</p>
-          <ul class="text-blue-700 space-y-1 ml-4">
-              <li>• Use short keywords. Example: Iphone instead of Iphone 16 Pro Max</li>
-              <li>• Visit Found Page by clicking <a class="font-bold" href="/found_items">here</a></li>
-          </ul>
-      </div>
+<%
+
+const categoryStyles = {
+  'Electronics': { icon: 'fa-laptop-code', bg: 'from-blue-500 to-indigo-600', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'Books & Stationery': { icon: 'fa-book-open', bg: 'from-amber-500 to-orange-600', badge: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'Clothing & Accessories': { icon: 'fa-tshirt', bg: 'from-rose-500 to-pink-600', badge: 'bg-rose-50 text-rose-700 border-rose-200' },
+  'Keys & Cards': { icon: 'fa-key', bg: 'from-emerald-500 to-teal-650', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  'Bags': { icon: 'fa-briefcase', bg: 'from-purple-500 to-indigo-600', badge: 'bg-purple-50 text-purple-700 border-purple-200' },
+  'Jewelry & Watches': { icon: 'fa-clock', bg: 'from-cyan-500 to-blue-600', badge: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+  'Sports': { icon: 'fa-dumbbell', bg: 'from-green-500 to-emerald-600', badge: 'bg-green-50 text-green-700 border-green-200' },
+  'Others': { icon: 'fa-box', bg: 'from-slate-500 to-slate-700', badge: 'bg-slate-50 text-slate-700 border-slate-200' },
+  'Other': { icon: 'fa-box', bg: 'from-slate-500 to-slate-700', badge: 'bg-slate-50 text-slate-700 border-slate-200' }
+};
+
+const getCategoryStyle = (cat) => {
+  return categoryStyles[cat] || { icon: 'fa-box-open', bg: 'from-indigo-500 to-purple-600', badge: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
+};
+%>
+
+<div class="relative bg-slate-950 text-white overflow-hidden py-16 border-b border-white/5">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/40 via-slate-950 to-slate-950"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight">Search Results</h1>
+    <p class="text-slate-400 text-sm max-w-lg mx-auto">Review matches corresponding to your category and keyword queries.</p>
   </div>
 </div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl font-bold text-slate-950">Query Matches</h2>
+    <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider"><%= founddata.length %> items matching</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% founddata.forEach(item => {
+      let style = getCategoryStyle(item.category);
+    %>
+      <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 border border-slate-150 flex flex-col h-full">
+        <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex-shrink-0">
+          <div class="absolute inset-0 bg-slate-950/15"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas <%= style.icon %> text-white text-6xl opacity-90 group-hover:scale-110 transition-transform duration-300"></i>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col flex-1 justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg border <%= style.badge %>"><%= item.category %></span>
+              <span class="text-slate-400 text-xs font-medium"><i class="far fa-clock mr-1"></i>Found</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1"><%= item.itemname %></h3>
+            <p class="text-slate-500 text-sm mb-4 line-clamp-2 leading-relaxed"><%= item.ddes %></p>
+          </div>
+          <div>
+            <div class="flex items-center text-slate-500 text-xs mb-5 bg-slate-50 px-3.5 py-2.5 rounded-xl border border-slate-100">
+              <i class="fas fa-location-dot mr-2 text-rose-500"></i>
+              <span class="font-medium line-clamp-1"><%= item.currentlocation %></span>
+            </div>
+            <a href="/found_items/<%= item._id %>" class="block w-full">
+              <button class="w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-indigo-600 transition-all font-bold text-sm flex items-center justify-center gap-2 group-hover:shadow-md">
+                View Details <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <div class="mt-8 max-w-xl mx-auto <%= show %>">
+    <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-6 shadow-sm">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-circle-question text-indigo-650 text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-indigo-900 font-bold mb-2">No Matching Items Found</h3>
+          <p class="text-indigo-800/80 text-sm mb-4">We couldn't find any listings matching your search. Here are some tips to help you search again:</p>
+          <ul class="text-indigo-850/80 text-sm space-y-2 mb-4">
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
+              <span>Use simpler keywords (e.g., "iPhone" instead of "iPhone 16 Pro Max").</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
+              <span>Double-check your spelling or try searching without a specific category.</span>
+            </li>
+          </ul>
+          <a href="/found_items" class="text-sm font-bold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1">
+            Browse all items instead <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
- </div>
- 
- 
 
-
-
- <%- include('partials/footer')%>
+<%- include('partials/footer')%>

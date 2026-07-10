@@ -1,24 +1,21 @@
-<!-- Help Card -->
-<div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
-  <div class="flex items-start">
-      <i class="fas fa-info-circle text-blue-500 text-xl mr-3 mt-1"></i>
+<div class="mt-8 bg-indigo-50/50 border border-indigo-100 rounded-2xl p-6 shadow-sm">
+  <div class="flex items-start gap-4">
+      <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-circle-question text-indigo-650 text-lg"></i>
+      </div>
       <div>
-          <h3 class="text-blue-800 font-semibold mb-2">Need Help?</h3>
-          <p class="text-blue-700 mb-2">If you have questions about reporting a <%= type %> item or need assistance:</p>
-          <ul class="text-blue-700 space-y-1 ml-4">
-              <li>• Email: lostandfound@college.edu</li>
-              <li>• Visit: Security Office, Building A</li>
+          <h3 class="text-indigo-900 font-bold mb-1">Need Help?</h3>
+          <p class="text-indigo-850/80 text-sm mb-3 font-medium">If you have questions about reporting a <%= type %> item or need assistance:</p>
+          <ul class="text-indigo-850/80 text-sm space-y-2">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-indigo-400 rounded-full"></span>
+                <span>Email Support: <a href="mailto:lostandfound@college.edu" class="font-bold underline hover:text-indigo-900">lostandfound@college.edu</a></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-indigo-400 rounded-full"></span>
+                <span>Security Office: Building A, Ground Floor</span>
+              </li>
           </ul>
       </div>
   </div>
 </div>
-</div>
-
-<!-- Footer -->
-<footer class="bg-gray-800 text-white py-8 mt-12">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-  <p>&copy; 2025 Lost & Found NIT Patna. All rights reserved.</p>
-</div>
-</footer>
-</body>
-</html>

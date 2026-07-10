@@ -1,27 +1,54 @@
 <%- include('partials/nav')%>
 
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-black/10"></div>
-        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-        
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+<%
+
+const categoryStyles = {
+  'Electronics': { icon: 'fa-laptop-code', bg: 'from-blue-500 to-indigo-600', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'Books & Stationery': { icon: 'fa-book-open', bg: 'from-amber-500 to-orange-600', badge: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'Clothing & Accessories': { icon: 'fa-tshirt', bg: 'from-rose-500 to-pink-600', badge: 'bg-rose-50 text-rose-700 border-rose-200' },
+  'Keys & Cards': { icon: 'fa-key', bg: 'from-emerald-500 to-teal-650', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  'Bags': { icon: 'fa-briefcase', bg: 'from-purple-500 to-indigo-600', badge: 'bg-purple-50 text-purple-700 border-purple-200' },
+  'Jewelry & Watches': { icon: 'fa-clock', bg: 'from-cyan-500 to-blue-600', badge: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+  'Sports': { icon: 'fa-dumbbell', bg: 'from-green-500 to-emerald-600', badge: 'bg-green-50 text-green-700 border-green-200' },
+  'Others': { icon: 'fa-box', bg: 'from-slate-500 to-slate-700', badge: 'bg-slate-50 text-slate-700 border-slate-200' },
+  'Other': { icon: 'fa-box', bg: 'from-slate-500 to-slate-700', badge: 'bg-slate-50 text-slate-700 border-slate-200' }
+};
+
+const getCategoryStyle = (cat) => {
+  return categoryStyles[cat] || { icon: 'fa-box-open', bg: 'from-indigo-500 to-purple-600', badge: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
+};
+%>
+
+    <div class="relative bg-slate-950 text-white overflow-hidden py-24 border-b border-white/5">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/60 via-slate-950 to-slate-950"></div>
+
+        <div class="absolute top-1/4 left-1/10 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/10 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                    <i class="fas fa-shield-alt text-sm"></i>
-                    <span class="text-sm font-medium">Secure Campus Recovery System</span>
+                <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md px-4 py-2 rounded-full mb-8 animate-float">
+                    <i class="fas fa-shield-halved text-indigo-400 text-sm"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Secure Campus Recovery System</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Lost Something on Campus?</h1>
-                <p class="text-xl md:text-2xl mb-10 text-white/90">We're here to help reunite you with your belongings</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="/lost_form">
-                        <button class="group bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-all shadow-xl hover:shadow-2xl hover:scale-105">
-                            <i class="fas fa-plus mr-2 group-hover:rotate-90 transition-transform"></i>Report Lost Item
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+                    Lost Something on <br class="hidden sm:inline" />
+                    <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent text-glow">Campus?</span>
+                </h1>
+                <p class="text-lg md:text-xl mb-12 text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed">
+                    A secure and automated space helping students reunite with their belongings quickly and easily.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-5">
+                    <a href="/lost_form" class="inline-block">
+                        <button class="group w-full sm:w-auto bg-gradient-to-r from-indigo-550 to-purple-600 bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.03] transition-all flex items-center justify-center gap-2.5">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                            Report Lost Item
                         </button>
                     </a>
-                    <a href="/found_form">
-                        <button class="group bg-indigo-900/50 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-indigo-900/70 transition-all shadow-xl border border-white/20">
-                            <i class="fas fa-hand-holding mr-2 group-hover:scale-110 transition-transform"></i>Report Found Item
+                    <a href="/found_form" class="inline-block">
+                        <button class="group w-full sm:w-auto bg-slate-900 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-slate-100 px-8 py-4 rounded-xl font-bold hover:scale-[1.03] transition-all flex items-center justify-center gap-2.5 shadow-xl">
+                            <i class="fas fa-hand-holding group-hover:scale-110 transition-transform text-indigo-400"></i>
+                            Report Found Item
                         </button>
                     </a>
                 </div>
@@ -29,17 +56,16 @@
         </div>
     </div>
 
-    <!-- Search Bar -->
     <form action="/search_results" method="POST">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
-            <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+            <div class="bg-white rounded-2xl shadow-xl p-5 md:p-6 border border-slate-200/80">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1 relative">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input name="keyword" type="text" placeholder="Search for items..." class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input name="keyword" type="text" placeholder="Search for items..." class="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-slate-800 placeholder-slate-400 font-medium">
                     </div>
                     <div class="md:w-56">
-                        <select name="category" class="w-full px-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none bg-white transition cursor-pointer">
+                        <select name="category" class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none bg-white transition cursor-pointer text-slate-600 font-medium">
                             <option value="all">All Categories</option>
                             <option value="Electronics">📱 Electronics</option>
                             <option value="Books & Stationery">📚 Books & Stationery</option>
@@ -51,225 +77,290 @@
                             <option value="Others">📦 Others</option>
                         </select>
                     </div>
-                    <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
-                        <i class="fas fa-search mr-2"></i>Search
+                    <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-3.5 rounded-xl transition-all font-bold shadow-md hover:shadow-indigo-500/20 hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <i class="fas fa-search text-sm"></i>Search
                     </button>
                 </div>
             </div>
         </div>
     </form>
 
-    <!-- Stats Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-8 text-center transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="w-16 h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-box-open text-indigo-600 text-2xl"></i>
+
+            <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 text-center transition-all duration-300 border border-slate-100 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-box-open text-indigo-600 text-xl"></i>
                 </div>
-                <h3 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">97</h3>
-                <p class="text-gray-600 font-medium">Items Found</p>
+                <h3 class="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">97</h3>
+                <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Items Found</p>
             </div>
-            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-8 text-center transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-handshake text-green-600 text-2xl"></i>
+
+            <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 text-center transition-all duration-300 border border-slate-100 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-handshake text-emerald-600 text-xl"></i>
                 </div>
-                <h3 class="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">189</h3>
-                <p class="text-gray-600 font-medium">Items Reunited</p>
+                <h3 class="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">189</h3>
+                <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Items Reunited</p>
             </div>
-            <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-8 text-center transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-clock text-orange-600 text-2xl"></i>
+
+            <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 text-center transition-all duration-300 border border-slate-100 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-clock text-amber-600 text-xl"></i>
                 </div>
-                <h3 class="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">45</h3>
-                <p class="text-gray-600 font-medium">Pending Claims</p>
+                <h3 class="text-4xl font-extrabold bg-gradient-to-r from-amber-650 to-orange-600 bg-clip-text text-transparent mb-2">45</h3>
+                <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Pending Claims</p>
             </div>
         </div>
     </div>
 
-    <!-- Recent found Section -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Recently Found Items</h2>
-            <span class="hidden md:inline-flex px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-medium">
-                <i class="fas fa-clock mr-2"></i>Updated daily
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-900">Recently Found Items</h2>
+                <p class="text-slate-500 text-sm mt-1">Belongings discovered across campus looking for their owners.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold border border-indigo-100">
+                <i class="fas fa-rotate text-[10px] animate-spin"></i> Live Feed
             </span>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Item Card 1 -->
-            <% 
-            let max =3;
-            let limitf = Math.min(max,founddata.length);
-            %>
-            <% for(let i =0;i<limitf;i++){ %>
 
-            <div class="group bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="h-56 bg-gradient-to-br from-blue-500 to-indigo-600 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-black/10"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <%
+            let max = 3;
+            let limitf = Math.min(max, founddata.length);
+            %>
+            <% if (limitf === 0) { %>
+                <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm">
+                    <i class="fas fa-box-open text-4xl text-slate-300 mb-3"></i>
+                    <p class="text-slate-500 font-medium">No items found recently</p>
+                </div>
+            <% } %>
+            <% for(let i = 0; i < limitf; i++){
+                let style = getCategoryStyle(founddata[i].category);
+            %>
+            <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 border border-slate-150 flex flex-col h-full">
+                <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex-shrink-0">
+                    <div class="absolute inset-0 bg-slate-950/15"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i class="fas fa-mobile-alt text-white text-7xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas <%= style.icon %> text-white text-6xl opacity-90 group-hover:scale-110 transition-transform duration-300"></i>
                     </div>
                 </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-blue-100"><%=founddata[i].category%></span>
-                        <span class="text-gray-500 text-sm font-medium">2 days ago</span>
+                <div class="p-6 flex flex-col flex-1 justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg border <%= style.badge %>"><%=founddata[i].category%></span>
+                            <span class="text-slate-400 text-xs font-medium"><i class="far fa-clock mr-1"></i>Recent</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1"><%=founddata[i].itemname%></h3>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2 leading-relaxed"><%=founddata[i].ddes%></p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2"><%=founddata[i].itemname%></h3>
-                    <p class="text-gray-600 mb-4 line-clamp-1"><%=founddata[i].ddes%></p>
-                    <div class="flex items-center text-gray-500 text-sm mb-5 bg-gray-50 px-3 py-2 rounded-lg">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
-                        <span><%=founddata[i].currentlocation%></span>
+                    <div>
+                        <div class="flex items-center text-slate-500 text-xs mb-5 bg-slate-50 px-3.5 py-2.5 rounded-xl border border-slate-100">
+                            <i class="fas fa-location-dot mr-2 text-rose-500"></i>
+                            <span class="font-medium line-clamp-1"><%=founddata[i].currentlocation%></span>
+                        </div>
+                        <a href="/found_items/<%=founddata[i]._id.toString()%>" class="block w-full">
+                            <button class="w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-indigo-600 transition-all font-bold text-sm flex items-center justify-center gap-2 group-hover:shadow-md">
+                                View Details <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </a>
                     </div>
-                    <a href="/found_items/<%=founddata[i]._id.toString()%>">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-semibold shadow-md hover:shadow-lg">
-                        View Details <i class="fas fa-arrow-right ml-2"></i>
-                    </button></a>
                 </div>
             </div>
             <%}%>
         </div>
 
-        <div class="text-center mt-8"><a href="/found_items">
-            <button class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
-                View All Items <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-            </button></a>
+        <% if (founddata.length > 0) { %>
+        <div class="text-center mt-10">
+            <a href="/found_items" class="inline-block">
+                <button class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-800 px-6 py-3 rounded-xl border border-slate-200 transition-all font-bold text-sm shadow-sm hover:shadow">
+                    View All Items <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </a>
         </div>
+        <% } %>
     </div>
 
-
-    <!-- Recent Items Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Recently Lost Items</h2>
-            <span class="hidden md:inline-flex px-4 py-2 bg-purple-50 text-purple-600 rounded-full text-sm font-medium">
-                <i class="fas fa-search mr-2"></i>Searching
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-900">Recently Lost Items</h2>
+                <p class="text-slate-500 text-sm mt-1">Postings from campus members who have misplaced belongings.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 text-rose-700 rounded-full text-xs font-semibold border border-rose-100">
+                <i class="fas fa-magnifying-glass text-[10px] animate-pulse"></i> Searching
             </span>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <% 
-            let limitl = Math.min(max,lostdata.length);
-            %>
-            <!-- Item Card 1 -->
-            <% for(let i=0;i<limitl;i++){ %>
 
-            <div class="group bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="h-56 bg-gradient-to-br from-purple-500 to-pink-600 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-black/10"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <%
+            let limitl = Math.min(max, lostdata.length);
+            %>
+            <% if (limitl === 0) { %>
+                <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm">
+                    <i class="fas fa-search text-4xl text-slate-300 mb-3"></i>
+                    <p class="text-slate-500 font-medium">No items reported lost recently</p>
+                </div>
+            <% } %>
+            <% for(let i = 0; i < limitl; i++){
+                let style = getCategoryStyle(lostdata[i].category);
+            %>
+            <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 border border-slate-150 flex flex-col h-full">
+                <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex-shrink-0">
+                    <div class="absolute inset-0 bg-slate-950/15"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i class="fas fa-mobile-alt text-white text-7xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas <%= style.icon %> text-white text-6xl opacity-90 group-hover:scale-110 transition-transform duration-300"></i>
                     </div>
                 </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="bg-purple-50 text-purple-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-purple-100"><%=lostdata[i].category%></span>
-                        <span class="text-gray-500 text-sm font-medium">2 days ago</span>
+                <div class="p-6 flex flex-col flex-1 justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg border <%= style.badge %>"><%=lostdata[i].category%></span>
+                            <span class="text-slate-400 text-xs font-medium"><i class="far fa-clock mr-1"></i>Recent</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1"><%=lostdata[i].itemname%></h3>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2 leading-relaxed"><%=lostdata[i].ddes%></p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2"><%=lostdata[i].itemname%></h3>
-                    <p class="text-gray-600 mb-4 line-clamp-1"><%=lostdata[i].ddes%></p>
-                    <div class="flex items-center text-gray-500 text-sm mb-5 bg-gray-50 px-3 py-2 rounded-lg">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
-                        <span><%=lostdata[i].llocation%></span>
+                    <div>
+                        <div class="flex items-center text-slate-500 text-xs mb-5 bg-slate-50 px-3.5 py-2.5 rounded-xl border border-slate-100">
+                            <i class="fas fa-location-dot mr-2 text-rose-500"></i>
+                            <span class="font-medium line-clamp-1"><%=lostdata[i].llocation%></span>
+                        </div>
+                        <a href="/lost_items/<%=lostdata[i]._id.toString()%>" class="block w-full">
+                            <button class="w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-indigo-600 transition-all font-bold text-sm flex items-center justify-center gap-2 group-hover:shadow-md">
+                                View Details <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </a>
                     </div>
-                    <a href="/lost_items/<%=lostdata[i]._id.toString()%>">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-semibold shadow-md hover:shadow-lg">
-                        View Details <i class="fas fa-arrow-right ml-2"></i>
-                    </button></a>
                 </div>
             </div>
             <%}%>
         </div>
 
-        <div class="text-center mt-8"><a href="/lost_items">
-            <button class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
-                View All Items <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-            </button></a>
+        <% if (lostdata.length > 0) { %>
+        <div class="text-center mt-10">
+            <a href="/lost_items" class="inline-block">
+                <button class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-800 px-6 py-3 rounded-xl border border-slate-200 transition-all font-bold text-sm shadow-sm hover:shadow">
+                    View All Items <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </a>
         </div>
+        <% } %>
     </div>
 
-
-    <!-- Recent claim Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Recently Claimed Items</h2>
-            <span class="hidden md:inline-flex px-4 py-2 bg-green-50 text-green-600 rounded-full text-sm font-medium">
-                <i class="fas fa-check-circle mr-2"></i>Pending Review
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-900">Recently Claimed Items</h2>
+                <p class="text-slate-500 text-sm mt-1">Items currently marked for verification and reunion.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold border border-emerald-100">
+                <i class="fas fa-clipboard-check text-[10px]"></i> Claim Verification
             </span>
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Item Card 1 -->
-            <% 
-            let limitc = Math.min(max,claimdata.length);
+            <%
+            let limitc = Math.min(max, claimdata.length);
             %>
-            <% for(let i=0;i<limitc;i++){ %>
-            <div class="group bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all hover:-translate-y-1 border border-gray-100">
-                <div class="h-56 bg-gradient-to-br from-green-500 to-teal-600 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-black/10"></div>
+            <% if (limitc === 0) { %>
+                <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm">
+                    <i class="fas fa-handshake-angle text-4xl text-slate-350 mb-3"></i>
+                    <p class="text-slate-500 font-medium">No claims pending at this moment</p>
+                </div>
+            <% } %>
+            <% for(let i = 0; i < limitc; i++){
+                if (!claimdata[i]) continue;
+                let style = getCategoryStyle(claimdata[i].category);
+            %>
+            <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 border border-slate-150 flex flex-col h-full opacity-90">
+                <div class="h-48 bg-gradient-to-br <%= style.bg %> relative overflow-hidden flex-shrink-0">
+                    <div class="absolute inset-0 bg-slate-950/20"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i class="fas fa-mobile-alt text-white text-7xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas <%= style.icon %> text-white text-6xl opacity-80 group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    <div class="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider flex items-center gap-1 shadow-md">
+                        <i class="fas fa-check-circle"></i> Claimed
                     </div>
                 </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="bg-green-50 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-green-100"><%=claimdata[i].category%></span>
-                        <span class="text-gray-500 text-sm font-medium">2 days ago</span>
+                <div class="p-6 flex flex-col flex-1 justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg border <%= style.badge %>"><%=claimdata[i].category%></span>
+                            <span class="text-slate-400 text-xs font-medium"><i class="far fa-clock mr-1"></i>Pending</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1"><%=claimdata[i].itemname%></h3>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2 leading-relaxed"><%=claimdata[i].ddes%></p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2"><%=claimdata[i].itemname%></h3>
-                    <p class="text-gray-600 mb-4 line-clamp-1"><%=claimdata[i].ddes%></p>
-                    <div class="flex items-center text-gray-500 text-sm mb-5 bg-gray-50 px-3 py-2 rounded-lg">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
-                        <span><%=claimdata[i].currentlocation%></span>
+                    <div>
+                        <div class="flex items-center text-slate-500 text-xs mb-5 bg-slate-50 px-3.5 py-2.5 rounded-xl border border-slate-100">
+                            <i class="fas fa-location-dot mr-2 text-rose-500"></i>
+                            <span class="font-medium line-clamp-1"><%=claimdata[i].currentlocation%></span>
+                        </div>
+                        <a href="/found_items/<%=claimdata[i]._id.toString()%>?claim=true" class="block w-full">
+                            <button class="w-full bg-slate-900 text-white py-3 rounded-xl hover:bg-indigo-600 transition-all font-bold text-sm flex items-center justify-center gap-2 group-hover:shadow-md">
+                                View Details <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </a>
                     </div>
-                    <a href="/found_items/<%=claimdata[i]._id.toString()%>?claim=true">
-                    <button class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-semibold shadow-md hover:shadow-lg">
-                      View Details <i class="fas fa-arrow-right ml-2"></i>
-                    </button></a>
                 </div>
             </div>
             <%}%>
         </div>
 
-        <div class="text-center mt-8"> <a href="/claimrequests"> 
-            <button class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
-                View All Items <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-            </button></a>
+        <% if (claimdata.length > 0) { %>
+        <div class="text-center mt-10">
+            <a href="/claimrequests" class="inline-block">
+                <button class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-800 px-6 py-3 rounded-xl border border-slate-200 transition-all font-bold text-sm shadow-sm hover:shadow">
+                    View All Claims <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </a>
         </div>
+        <% } %>
     </div>
 
-    <!-- How It Works Section -->
-    <div class="bg-gradient-to-br from-gray-50 to-indigo-50/30 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-slate-950 text-white py-24 border-t border-b border-white/5 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[160px]"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Simple steps to recover your lost items</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4">How It Works</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-base">Simple and verified steps to retrieve your missing belongings.</p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="relative">
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-gray-100 h-full">
-                        <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                            <span class="text-white text-2xl font-bold">1</span>
+
+                <div class="relative group">
+                    <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 hover:border-indigo-500/40 transition-all duration-300 shadow-xl h-full flex flex-col">
+                        <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl font-bold">1</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Report Item</h3>
-                        <p class="text-gray-600 leading-relaxed">Found or lost something? Report it with details and location.</p>
+                        <h3 class="text-xl font-bold mb-3">Report Item</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Submit lost items details or file found objects with campus locations.</p>
                     </div>
-                    <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-indigo-300 to-transparent"></div>
+                    <div class="hidden md:block absolute top-12 -right-4 w-8 h-[2px] bg-gradient-to-r from-indigo-500/50 to-transparent"></div>
                 </div>
-                <div class="relative">
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-gray-100 h-full">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                            <span class="text-white text-2xl font-bold">2</span>
+
+                <div class="relative group">
+                    <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 hover:border-purple-500/40 transition-all duration-300 shadow-xl h-full flex flex-col">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl font-bold">2</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Search & Match</h3>
-                        <p class="text-gray-600 leading-relaxed">Browse items or get notified when there's a match.</p>
+                        <h3 class="text-xl font-bold mb-3">Search & Match</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Search with categories and description matching filters in real time.</p>
                     </div>
-                    <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-purple-300 to-transparent"></div>
+                    <div class="hidden md:block absolute top-12 -right-4 w-8 h-[2px] bg-gradient-to-r from-purple-500/50 to-transparent"></div>
                 </div>
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                        <span class="text-white text-2xl font-bold">3</span>
+
+                <div class="group">
+                    <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 hover:border-emerald-500/40 transition-all duration-300 shadow-xl h-full flex flex-col">
+                        <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl font-bold">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Get Reunited</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Mark your claims and securely recover your item at the security office.</p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Get Reunited</h3>
-                    <p class="text-gray-600 leading-relaxed">Claim your item from the campus security office.</p>
                 </div>
             </div>
         </div>

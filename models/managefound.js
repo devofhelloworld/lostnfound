@@ -16,4 +16,3 @@ const foundSchema = mongoose.Schema({
 })
 
 module.exports = mongoose.model('found',foundSchema);
-

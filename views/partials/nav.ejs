@@ -8,12 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/output.css">
     <style>
-        /* Smooth scroll padding for fixed nav */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
         html {
             scroll-padding-top: 80px;
         }
-        
-        /* Line clamp utility */
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -22,48 +30,53 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-gray-900 via-indigo-900 to-gray-900 shadow-lg backdrop-blur-lg bg-opacity-95">
+<body class="bg-slate-50 text-slate-800 bg-mesh min-h-screen flex flex-col">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-white/10 shadow-lg transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center h-16">
             <div class="flex items-center group">
-
-              <span class="text-white text-xl font-bold hover:text-indigo-100 transition-colors"><a href="/">Lost & Found NIT Patna</a></span>
+              <a href="/" class="flex items-center gap-2.5">
+                <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-md shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                  <i class="fas fa-search-location text-white text-sm"></i>
+                </div>
+                <span class="text-white text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
+                  Lost & Found
+                </span>
+              </a>
             </div>
-      
-            <!-- Desktop menu -->
-            <div class="hidden md:flex gap-0.5 lg:space-x-4">
-              <a href="/" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
-                <i class="fas fa-home mr-2"></i>Home
+
+            <div class="hidden md:flex items-center gap-2">
+              <a href="/" class="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-home text-indigo-400"></i>Home
               </a>
               <% if(isloggedin){ %>
-              <a href="/lost_items" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
-                <i class="fas fa-search mr-2"></i>Lost Items
+              <a href="/lost_items" class="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-search text-indigo-400"></i>Lost Items
               </a>
-              <a href="/found_items" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
-                <i class="fas fa-box-open mr-2"></i>Found Items
+              <a href="/found_items" class="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-box-open text-indigo-400"></i>Found Items
               </a>
-              <a href="/claimrequests" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
-                <i class="fas fa-hand-holding mr-2"></i>Claim Requests
-              </a><%}%>
-              <a href="/contact" class="text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105">
-                <i class="fas fa-envelope mr-2"></i>Contact
+              <a href="/claimrequests" class="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-hand-holding-heart text-indigo-400"></i>Claims
               </a>
-              
+              <%}%>
+              <a href="/contact" class="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium text-sm flex items-center gap-2">
+                <i class="fas fa-envelope text-indigo-400"></i>Contact
+              </a>
 
-           <%if(isloggedin){ %>
-            <a href="/logout" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all font-medium hover:scale-105 border border-white/30">
-              <i class="fas fa-sign-out-alt mr-2"></i>Logout
-            </a>
+              <div class="h-5 w-[1px] bg-white/10 mx-2"></div>
+
+              <%if(isloggedin){ %>
+              <a href="/logout" class="text-rose-400 hover:text-white hover:bg-rose-500/20 px-3.5 py-2 rounded-xl transition-all font-semibold text-sm flex items-center gap-2 border border-rose-500/20">
+                <i class="fas fa-sign-out-alt"></i>Logout
+              </a>
               <%}else {%>
-                <a href="/login" class="block bg-white text-indigo-600 hover:bg-gray-50 px-4 py-2 rounded-xl transition-all font-semibold shadow-lg hover:shadow-xl hover:scale-105">
-                  <i class="fas fa-sign-in-alt mr-2"></i>Login
-                </a>
-                <%}%>
-              
+              <a href="/login" class="bg-gradient-to-r from-indigo-550 to-purple-600 bg-indigo-600 text-white hover:from-indigo-700 hover:to-purple-700 px-5 py-2 rounded-xl transition-all font-semibold text-sm shadow-md hover:shadow-indigo-500/20 hover:scale-105 flex items-center gap-2">
+                <i class="fas fa-sign-in-alt"></i>Login
+              </a>
+              <%}%>
             </div>
-      
-            <!-- Hamburger button (mobile only) -->
+
             <button id="hamburger" class="md:hidden flex flex-col space-y-1.5 p-2 focus:outline-none hover:bg-white/10 rounded-lg transition-all" aria-label="Toggle menu">
               <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="line1"></span>
               <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
@@ -71,53 +84,52 @@
             </button>
           </div>
         </div>
-      
-        <!-- Mobile menu (hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 bg-indigo-700/95 backdrop-blur-lg border-t border-white/10">
-          <a href="/" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
-            <i class="fas fa-home mr-2"></i>Home
+
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-1.5 bg-slate-900/95 backdrop-blur-lg border-t border-white/10 shadow-2xl">
+          <a href="/" class="block text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium">
+            <i class="fas fa-home mr-2 text-indigo-400"></i>Home
           </a>
           <% if(isloggedin){ %>
-          <a href="/lost_items" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
-            <i class="fas fa-search mr-2"></i>Lost Items
+          <a href="/lost_items" class="block text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium">
+            <i class="fas fa-search mr-2 text-indigo-400"></i>Lost Items
           </a>
-          <a href="/found_items" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
-            <i class="fas fa-box-open mr-2"></i>Found Items
+          <a href="/found_items" class="block text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium">
+            <i class="fas fa-box-open mr-2 text-indigo-400"></i>Found Items
           </a>
-          <a href="/claimrequests" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
-            <i class="fas fa-hand-holding mr-2"></i>Claim Requests
+          <a href="/claimrequests" class="block text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium">
+            <i class="fas fa-hand-holding-heart mr-2 text-indigo-400"></i>Claims
           </a>
           <%}%>
-          <a href="/contact" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all">
-            <i class="fas fa-envelope mr-2"></i>Contact
+          <a href="/contact" class="block text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition-all font-medium">
+            <i class="fas fa-envelope mr-2 text-indigo-400"></i>Contact
           </a>
-          
-           <%if(isloggedin){ %>
-          <a href="/logout" class="block text-white hover:bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl transition-all border border-white/30">
+
+          <div class="h-[1px] bg-white/10 my-2"></div>
+
+          <%if(isloggedin){ %>
+          <a href="/logout" class="block text-rose-400 hover:text-white hover:bg-rose-500/20 px-3 py-2 rounded-xl transition-all font-semibold border border-rose-500/20">
             <i class="fas fa-sign-out-alt mr-2"></i>Logout
           </a>
-            <%}else {%>
-              <a href="/login" class="block bg-white text-indigo-600 hover:bg-gray-50 px-3 py-2 rounded-xl transition-all font-semibold shadow-lg">
-                <i class="fas fa-sign-in-alt mr-2"></i>Login
-              </a>
-              <%}%>
+          <%}else {%>
+          <a href="/login" class="block bg-indigo-650 bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700 px-3 py-2.5 rounded-xl transition-all font-semibold text-center shadow-lg">
+            <i class="fas fa-sign-in-alt mr-2"></i>Login
+          </a>
+          <%}%>
         </div>
       </nav>
-      
-      <!-- Spacer for fixed nav -->
+
       <div class="h-16"></div>
-      
+
       <script>
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         const line1 = document.getElementById('line1');
         const line2 = document.getElementById('line2');
         const line3 = document.getElementById('line3');
-      
+
         hamburger.addEventListener('click', () => {
           mobileMenu.classList.toggle('hidden');
-          
-          // Animate hamburger to X
+
           if (!mobileMenu.classList.contains('hidden')) {
             line1.style.transform = 'rotate(45deg) translateY(8px)';
             line2.style.opacity = '0';
@@ -129,7 +141,6 @@
           }
         });
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
           if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
             mobileMenu.classList.add('hidden');
@@ -139,16 +150,17 @@
           }
         });
 
-        // Add scroll effect to navbar
         const nav = document.querySelector('nav');
-        
+
         window.addEventListener('scroll', () => {
           const currentScroll = window.pageYOffset;
-          
-          if (currentScroll > 50) {
-            nav.classList.add('shadow-2xl');
+
+          if (currentScroll > 20) {
+            nav.classList.add('shadow-xl', 'bg-slate-900/90', 'border-slate-800');
+            nav.classList.remove('bg-slate-900/80');
           } else {
-            nav.classList.remove('shadow-2xl');
+            nav.classList.remove('shadow-xl', 'bg-slate-900/90', 'border-slate-800');
+            nav.classList.add('bg-slate-900/80');
           }
         });
       </script>

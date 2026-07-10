@@ -16,7 +16,7 @@ const mongoconnect = (callback)=>{
 
 const getdb = ()=>{
   if(!_db){
-    throw new Error('Database not connected'); 
+    throw new Error('Database not connected');
   }
   else return _db;
 }

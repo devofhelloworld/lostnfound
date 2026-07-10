@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express()
 const path = require('path');
@@ -11,7 +12,7 @@ const { default: mongoose } = require('mongoose');
 const authrouter = require('./routes/authroutes');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const DB_PATH = "mongodb+srv://root:root@lostnfound.yyk8iar.mongodb.net/lostnfound?retryWrites=true&w=majority&appName=lostnfound";
+const DB_PATH = process.env.DB_PATH;
 
 app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine','ejs');
@@ -23,7 +24,7 @@ const store = new MongoDBStore({
 })
 
 app.use(session({
-  secret: 'Lost and Found',
+  secret: process.env.SESSION_SECRET || 'Lost and Found',
   resave: false,
   saveUninitialized: true,
   store: store
@@ -58,12 +59,9 @@ app.use((req,res,next)=>{
   res.render('404',{pagetitle:'Page not found!',isloggedin: req.session.isloggedin});
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(DB_PATH).then(()=>{
   console.log('Successfully connected to mongo');
   app.listen(PORT,console.log(`Server is running on http://localhost:${PORT}`));
 }).catch(error=>console.log(error));
-
-
-

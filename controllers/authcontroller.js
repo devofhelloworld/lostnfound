@@ -13,7 +13,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.postlogin = [
-  
+
   check('email').trim().isEmail().withMessage('Wrong email or password!').custom((email)=>{
     if(!email.endsWith('@nitp.ac.in')){
       throw new Error('Wrong email or password!');
@@ -22,7 +22,6 @@ exports.postlogin = [
   }),
 
   check('password').trim().isLength({min:8}).withMessage('Wrong email or password!'),
-
 
   (req, res, next) => {
   const { email, password } = req.body;
@@ -59,7 +58,7 @@ exports.postlogin = [
         req.session.isloggedin = true;
         req.session.useremail = email;
         res.redirect("/");
-      } 
+      }
       else {
         res.render("login", {
           pagetitle: "Login",
@@ -68,7 +67,7 @@ exports.postlogin = [
           error:'Invalid email or password!'
         });
       }
-      } 
+      }
     }
   });
 }]

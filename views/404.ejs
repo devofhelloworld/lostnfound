@@ -1,11 +1,25 @@
 <%- include('partials/nav')%>
-<div class="flex items-center justify-around flex-col md:flex-row  w-screen bg-white"> 
-  <div>
-  <img src="/funny-404-error-page-design.gif" alt=""></div>
-  <div class="flex flex-col gap-10 p-10">
-    <h1 class="text-3xl md:text-5xl font-extrabold">404 Error !</h1>
-    <p class="text-gray-500 md:text-xl" >The page you are looking for is not found!</p>
-  </div>
 
+<div class="flex-1 flex flex-col items-center justify-center py-16 px-4">
+  <div class="relative w-full max-w-lg text-center">
+
+    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-20 animate-pulse-slow"></div>
+
+    <div class="relative bg-white rounded-3xl shadow-xl p-8 border border-slate-100 flex flex-col items-center gap-6">
+      <div class="w-full max-w-xs overflow-hidden rounded-2xl border border-slate-100/50 shadow-sm bg-slate-50 p-2">
+        <img src="/funny-404-error-page-design.gif" class="w-full h-auto rounded-xl" alt="Funny 404 GIF">
+      </div>
+      <div>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Page Misplaced!</h1>
+        <p class="text-slate-500 text-sm leading-relaxed max-w-xs mx-auto">Just like a lost item, we can't seem to find the page you are looking for.</p>
+      </div>
+      <a href="/" class="block w-full max-w-xs">
+        <button class="w-full bg-gradient-to-r from-indigo-550 to-purple-650 bg-indigo-600 text-white py-3.5 rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all font-bold text-sm shadow hover:shadow-indigo-500/20 hover:scale-[1.02] flex items-center justify-center gap-2">
+          <i class="fas fa-home text-xs"></i> Back to Home
+        </button>
+      </a>
+    </div>
+  </div>
 </div>
+
 <%- include('partials/footer')%>
