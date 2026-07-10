@@ -12,7 +12,7 @@ const foundSchema = mongoose.Schema({
   ,currentlocation:{type: String , required: true}
   ,addnote:String
   ,terms:{type: String , required: true}
-
+  ,useremail:{type: String}   // email of the user who reported this found item
 })
 
 module.exports = mongoose.model('found',foundSchema);

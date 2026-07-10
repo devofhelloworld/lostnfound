@@ -1,5 +1,6 @@
 const lost = require("../models/managelost");
 const { uploadToCloudinary } = require('../utils/cloudinaryutil');
+const mongoose = require('mongoose');
 
 exports.savelost = async (req,res,next)=>{
   try {
@@ -27,17 +28,19 @@ exports.lostlist = (req,res,next)=>{
   });
 }
 
-exports.findByIddetails = (req,res,next)=>{
+exports.findByIddetails = (req, res, next) => {
   const itemid = req.params.itemid;
-  console.log(itemid);
-  lost.findById(itemid).then((itemdata)=>{
-    if(!itemdata){
+
+  if (!mongoose.Types.ObjectId.isValid(itemid)) {
+    console.warn(`[findByIddetails] Invalid itemid param: "${itemid}" — redirecting.`);
+    return res.redirect('/lost_items');
+  }
+
+  lost.findById(itemid).then((itemdata) => {
+    if (!itemdata) {
       res.redirect('/lost_items');
+    } else {
+      res.render('lostitemdetails', { itemdata, pagetitle: 'Lost Item Details', isloggedin: req.session.isloggedin });
     }
-    else{
-    res.render('lostitemdetails',{itemdata: itemdata,pagetitle:'Lost Item Details',isloggedin: req.session.isloggedin});
-    }
-
-  });
-
-}
+  }).catch(next);
+};

@@ -1,5 +1,6 @@
 const claim = require("../models/manageclaims");
 const found = require("../models/managefound");
+const mongoose = require("mongoose");
 
 exports.claimdetails = (req, res, next) => {
   claim
@@ -44,13 +45,28 @@ exports.claimdetails = (req, res, next) => {
 
 exports.addtoclaimitems = (req, res, next) => {
   const refid = req.params.claimid;
-  found.findById(refid).then((datas) => {
+
+  // Guard: reject non-ObjectId values before hitting the DB
+  if (!mongoose.Types.ObjectId.isValid(refid)) {
+    console.warn(`[addtoclaimitems] Invalid claimid param: "${refid}" — redirecting.`);
+    return res.redirect('/found_items');
+  }
+
+  found.findById(refid).then((foundItem) => {
+    if (!foundItem) return res.redirect('/found_items');
+
+    // Block: the person who reported the item cannot claim it themselves
+    if (foundItem.useremail && foundItem.useremail === req.session.useremail) {
+      console.warn(`[addtoclaimitems] Self-claim blocked for ${req.session.useremail}`);
+      return res.redirect(`/found_items/${refid}?selfclaim=true`);
+    }
+
     claim.find().then((data) => {
-      const datas = data.find((ids) => {
+      const existing = data.find((ids) => {
         return ids.refid.toString() == refid;
       });
 
-      if (!datas) {
+      if (!existing) {
         const useremail = req.session.useremail;
         const claimitem = new claim({ refid, useremail });
         claimitem
@@ -64,5 +80,5 @@ exports.addtoclaimitems = (req, res, next) => {
         res.redirect(`/found_items/${refid}?claim=true&claimed=true`);
       }
     });
-  });
+  }).catch(next);
 };

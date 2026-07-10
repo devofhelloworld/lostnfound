@@ -1,5 +1,31 @@
 <%- include('partials/nav')%>
 
+<% if (!isloggedin) { %>
+<div id="nitp-notice" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-7 h-7 bg-white/15 rounded-lg flex items-center justify-center flex-shrink-0">
+        <i class="fas fa-circle-info text-white text-xs"></i>
+      </div>
+      <p class="text-sm font-medium text-white/95 leading-snug">
+        <span class="font-bold">Note:</span>
+        To fully access all features — reporting items, filing claims &amp; viewing details —
+        <a href="/login" class="underline underline-offset-2 font-bold hover:text-indigo-200 transition-colors">login</a>
+        or <a href="/signup" class="underline underline-offset-2 font-bold hover:text-indigo-200 transition-colors">sign up</a>
+        with your <span class="font-bold">NIT Patna email</span>
+        (<code class="bg-white/15 px-1.5 py-0.5 rounded text-xs font-mono">@nitp.ac.in</code>).
+      </p>
+    </div>
+    <button onclick="document.getElementById('nitp-notice').style.display='none'"
+            class="flex-shrink-0 w-7 h-7 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors"
+            aria-label="Dismiss">
+      <i class="fas fa-xmark text-white text-xs"></i>
+    </button>
+  </div>
+</div>
+<% } %>
+
+
     <% const categoryStyles={ 'Electronics' : { icon: 'fa-laptop-code' , bg: 'from-blue-500 to-indigo-600' ,
         badge: 'bg-blue-50 text-blue-700 border-blue-200' }, 'Books & Stationery' : { icon: 'fa-book-open' ,
         bg: 'from-amber-500 to-orange-600' , badge: 'bg-amber-50 text-amber-700 border-amber-200'
@@ -107,10 +133,14 @@
                         class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-box-open text-indigo-600 text-xl"></i>
                     </div>
-                    <h3
-                        class="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                        97</h3>
+                    <h3 id="stat-items-found"
+                        class="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2"
+                        data-target="<%= statItemsFound %>">
+                        <%= statItemsFound %></h3>
                     <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Items Found</p>
+                    <span class="inline-flex items-center gap-1 mt-2 text-[10px] font-semibold text-indigo-400 uppercase tracking-widest">
+                        <span id="stat-found-dot" class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span> Live
+                    </span>
                 </div>
 
                 <div
@@ -119,10 +149,14 @@
                         class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-handshake text-emerald-600 text-xl"></i>
                     </div>
-                    <h3
-                        class="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-                        189</h3>
+                    <h3 id="stat-items-reunited"
+                        class="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2"
+                        data-target="<%= statReunited %>">
+                        <%= statReunited %></h3>
                     <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Items Reunited</p>
+                    <span class="inline-flex items-center gap-1 mt-2 text-[10px] font-semibold text-emerald-400 uppercase tracking-widest">
+                        <span id="stat-reunited-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live
+                    </span>
                 </div>
 
                 <div
@@ -131,15 +165,19 @@
                         class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-clock text-amber-600 text-xl"></i>
                     </div>
-                    <h3
-                        class="text-4xl font-extrabold bg-gradient-to-r from-amber-650 to-orange-600 bg-clip-text text-transparent mb-2">
-                        45</h3>
+                    <h3 id="stat-pending-claims"
+                        class="text-4xl font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-2"
+                        data-target="<%= statPending %>">
+                        <%= statPending %></h3>
                     <p class="text-slate-500 font-semibold text-sm uppercase tracking-wider">Pending Claims</p>
+                    <span class="inline-flex items-center gap-1 mt-2 text-[10px] font-semibold text-amber-400 uppercase tracking-widest">
+                        <span id="stat-claims-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Live
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h2 class="text-3xl font-extrabold text-slate-900">Recently Found Items</h2>
@@ -152,8 +190,8 @@
                 </span>
             </div>
 
+            <% let max=3; let limitf=Math.min(max, founddata.length); %>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <% let max=3; let limitf=Math.min(max, founddata.length); %>
                     <% if (limitf===0) { %>
                         <div
                             class="col-span-full bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm">
@@ -478,3 +516,56 @@
         </div>
 
         <%- include('partials/footer')%>
+
+<script>
+(function () {
+  // Smooth animated counter
+  function animateCount(el, from, to, duration) {
+    if (from === to) return;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      // Ease-out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(from + (to - from) * ease);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const statFound   = document.getElementById('stat-items-found');
+  const statReunited= document.getElementById('stat-items-reunited');
+  const statClaims  = document.getElementById('stat-pending-claims');
+
+  // Pulse dot to signal a live update just arrived
+  function flashDot(dotId) {
+    const dot = document.getElementById(dotId);
+    if (!dot) return;
+    dot.classList.remove('animate-pulse');
+    dot.style.transform = 'scale(2)';
+    dot.style.transition = 'transform 0.3s ease';
+    setTimeout(() => {
+      dot.style.transform = 'scale(1)';
+      setTimeout(() => dot.classList.add('animate-pulse'), 300);
+    }, 300);
+  }
+
+  function poll() {
+    fetch('/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        const prevFound    = parseInt(statFound.textContent,    10);
+        const prevReunited = parseInt(statReunited.textContent, 10);
+        const prevClaims   = parseInt(statClaims.textContent,   10);
+
+        if (data.itemsFound    !== prevFound)    { animateCount(statFound,    prevFound,    data.itemsFound,    800); flashDot('stat-found-dot'); }
+        if (data.itemsReunited !== prevReunited) { animateCount(statReunited, prevReunited, data.itemsReunited, 800); flashDot('stat-reunited-dot'); }
+        if (data.pendingClaims !== prevClaims)   { animateCount(statClaims,   prevClaims,  data.pendingClaims,  800); flashDot('stat-claims-dot'); }
+      })
+      .catch(() => { /* silently ignore network errors */ });
+  }
+
+  // Poll every 10 seconds
+  setInterval(poll, 10000);
+})();
+</script>

@@ -31,7 +31,7 @@ app.use(session({
 }))
 
 app.use((req, res, next) => {
-  const excludedPaths = ['/', '/login','/signup','/contact'];
+  const excludedPaths = ['/', '/login','/signup','/contact','/about','/api/stats'];
 
   if (excludedPaths.includes(req.path)) {
     return next();
@@ -54,6 +54,9 @@ app.use(lostrouter);
 
 app.get('/contact',(req,res,next)=>{
   res.render('contact',{pagetitle:'Contact Me!',isloggedin: req.session.isloggedin});
+});
+app.get('/about',(req,res,next)=>{
+  res.render('about',{pagetitle:'About · Lost & Found NIT Patna',isloggedin: req.session.isloggedin});
 });
 app.use((req,res,next)=>{
   res.render('404',{pagetitle:'Page not found!',isloggedin: req.session.isloggedin});

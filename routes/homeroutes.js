@@ -5,6 +5,7 @@ const foundcontroller = require('../controllers/foundcontroller');
 
 home.get('/',homecontroller.homepage);
 home.get('/found_form',homecontroller.foundform);
-home.get('/lost_form',homecontroller.lostform)
+home.get('/lost_form',homecontroller.lostform);
+home.get('/api/stats',homecontroller.stats);
 
 module.exports = home;

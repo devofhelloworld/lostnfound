@@ -2,6 +2,7 @@ const found = require("../models/managefound");
 const user = require("../models/user");
 const claim = require('../models/manageclaims');
 const { uploadToCloudinary } = require('../utils/cloudinaryutil');
+const mongoose = require('mongoose');
 
 exports.savefound = async (req,res,next)=>{
   try {
@@ -10,8 +11,9 @@ exports.savefound = async (req,res,next)=>{
       imglink = await uploadToCloudinary(req.file.buffer);
     }
     const {itemname,category,ddes,fname,lname,phone,roll,currentlocation,addnote,terms} = req.body;
+    const useremail = req.session.useremail || '';
 
-    const founditem = new found({itemname,category,ddes,imglink,fname,lname,phone,roll,currentlocation,addnote,terms});
+    const founditem = new found({itemname,category,ddes,imglink,fname,lname,phone,roll,currentlocation,addnote,terms,useremail});
 
     await founditem.save();
     console.log('Item added successfully');
@@ -22,35 +24,60 @@ exports.savefound = async (req,res,next)=>{
   }
 }
 
-exports.foundlist = (req,res,next)=>{
-   found.find().sort({_id:-1}).then((founddata)=>{
-    res.render('founditems',{ founddata:founddata ,pagetitle:'Found Items',isloggedin: req.session.isloggedin});
-   })
+exports.foundlist = async (req, res, next) => {
+  try {
+    const [allFound, allClaims] = await Promise.all([
+      found.find().sort({ _id: -1 }),
+      claim.find({}, 'refid')       // only fetch the refid field
+    ]);
 
-}
+    // Build a Set of claimed IDs so we can filter in O(1)
+    const claimedIds = new Set(
+      allClaims
+        .filter(c => mongoose.Types.ObjectId.isValid(c.refid.toString()))
+        .map(c => c.refid.toString())
+    );
 
-exports.founditemdetails = (req,res,next)=>{
+    const founddata = allFound.filter(item => !claimedIds.has(item._id.toString()));
+
+    res.render('founditems', { founddata, pagetitle: 'Found Items', isloggedin: req.session.isloggedin });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+exports.founditemdetails = (req, res, next) => {
   const itemid = req.params.itemid;
+
+  // Guard: invalid ObjectId in URL → redirect cleanly
+  if (!mongoose.Types.ObjectId.isValid(itemid)) {
+    console.warn(`[founditemdetails] Invalid itemid param: "${itemid}" — redirecting.`);
+    return res.redirect('/found_items');
+  }
+
   const claims = req.query.claim === 'true';
   const claimed = req.query.claimed == 'true';
+  const currentUserEmail = req.session.useremail || '';
 
-  found.findById(itemid).then((itemdata)=>{
+  found.findById(itemid).then((itemdata) => {
+    if (!itemdata) return res.redirect('/found_items');
 
-      if(claims == true){
-        claim.find({refid:itemid}).then(([claimd])=>{
-         user.find({email:claimd.useremail}).then(([userdata])=>{
+    // True if the logged-in user is the one who reported this item
+    const isOwnItem = itemdata.useremail && itemdata.useremail === currentUserEmail;
 
-        if(claimed!=true){
-          !itemdata?res.redirect('/found_items'): res.render('founditemdetails',{itemdata:itemdata,pagetitle:'Requested item details',disable: 'hidden',title:'Claim',claimed:'hidden',isloggedin: req.session.isloggedin,userdata:userdata});}
-
-        else{
-
-          !itemdata?res.redirect('/found_items'): res.render('founditemdetails',{itemdata:itemdata,pagetitle:'Requested item details',disable: 'hidden',title:'Claim',claimed:'',isloggedin: req.session.isloggedin,userdata:userdata});
-        }
-      })
-     })
+    if (claims == true) {
+      claim.find({ refid: itemid }).then(([claimd]) => {
+        user.find({ email: claimd.useremail }).then(([userdata]) => {
+          if (claimed != true) {
+            res.render('founditemdetails', { itemdata, pagetitle: 'Requested item details', disable: 'hidden', title: 'Claim', claimed: 'hidden', isloggedin: req.session.isloggedin, userdata, isOwnItem });
+          } else {
+            res.render('founditemdetails', { itemdata, pagetitle: 'Requested item details', disable: 'hidden', title: 'Claim', claimed: '', isloggedin: req.session.isloggedin, userdata, isOwnItem });
+          }
+        });
+      });
+    } else {
+      res.render('founditemdetails', { itemdata, pagetitle: 'Found item details', disable: '', title: 'Found', claimed: 'hidden', isloggedin: req.session.isloggedin, userdata: null, isOwnItem });
     }
-      else  { !itemdata?res.redirect('/found_items'): res.render('founditemdetails',{itemdata:itemdata,pagetitle:'Found item details',disable:'',title:'Found',claimed:'hidden',isloggedin: req.session.isloggedin,userdata:null});}
-
-  })
-}
+  }).catch(next);
+};
